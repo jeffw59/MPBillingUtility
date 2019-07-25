@@ -1,0 +1,65 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="TraderSpecificService" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Rent</Value>
+    </Setting>
+    <Setting Name="DebtorType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">113</Value>
+    </Setting>
+    <Setting Name="OutFileNameStub" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Billing</Value>
+    </Setting>
+    <Setting Name="TradersXml" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Baylink Motor Bikes,A1300362,321.55&lt;/string&gt;
+  &lt;string&gt;CTG Wilmar,A1300353,100&lt;/string&gt;
+  &lt;string&gt;Down To Earth Flooring,A1300354,78&lt;/string&gt;
+  &lt;string&gt;Eastern Tree Service,A1300355,45.56&lt;/string&gt;
+  &lt;string&gt;Granny Food - Order 2 Go,A1300356,78.45&lt;/string&gt;
+  &lt;string&gt;Grego,A12233,100&lt;/string&gt;
+  &lt;string&gt;Margeret Rowlands curry,A1300357,95&lt;/string&gt;
+  &lt;string&gt;Plant Savers - Sunrise Energy Ent,A1300358,34&lt;/string&gt;
+  &lt;string&gt;Plexcom Industries,A1300359,234&lt;/string&gt;
+  &lt;string&gt;Sunburnt Solar,A1300360,450&lt;/string&gt;
+  &lt;string&gt;Wilmarq Consulting,A1300361,34.99&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ServicesXml" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;B&amp;amp;W Photcopies,1,0.10,0128471453&lt;/string&gt;
+  &lt;string&gt;Colour Photocopies,1,0.25,0128471453&lt;/string&gt;
+  &lt;string&gt;Electricity,1,20,0128471453&lt;/string&gt;
+  &lt;string&gt;Facsimilie,1,0.20,0128471453&lt;/string&gt;
+  &lt;string&gt;Gas,1,10,0128471453&lt;/string&gt;
+  &lt;string&gt;Rent,1,100,0128471460&lt;/string&gt;
+  &lt;string&gt;Sausages,12,8.00,0123456789&lt;/string&gt;
+  &lt;string&gt;Telephone,1,0.25,0128471453&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="TradersListCols" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="ServicesListCols" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="CampingGSTAccount" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0199007806</Value>
+    </Setting>
+    <Setting Name="CampingIncomeAccount" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0154961410</Value>
+    </Setting>
+    <Setting Name="CampingDepositAccount" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0154961410</Value>
+    </Setting>
+    <Setting Name="CampingDebtorType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="CampingInvLeadText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Foreshore Camping Fees - Season 2019/20</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

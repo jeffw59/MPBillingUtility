@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="RichTextBox1.Text" xml:space="preserve">
+    <value>Introduction:
+
+The MP-Billing application is designed to create billing data suitable for direct uploading into Proclaim.
+
+It is most suited for low-volume situations where a business unit needs to create professional corporate invoices that include...
+ # enhanced customer payment options
+ # correct posting accounts for payments received
+ # full integration with the corporate cashiering and sundry debtors system -Proclaim.
+
+A business unit can use the program to simply and quickly assemble their transaction source data into a text file ready for bulk upload into Proclaim.
+This program has a simple interface to select the trader and the service and the rest is automatic.
+Alternatively bulk billing data may be extracted from RMS (Camping Booking System) into a text file.  
+You can then use the bulk method to read the file, add the required billing codes and convert it into a form suitable for direct uploading into Proclaim.</value>
+  </data>
+  <data name="RichTextBox2.Text" xml:space="preserve">
+    <value>Initial Setup:
+
+Use the FILE - SETTINGS menu option to set the debtor type applicable for your type of billing.
+ eg 
+use 113 for Economic Development
+use 131 for domestic bins
+use 128 for Camping
+
+You may use the session settings to alter the transaction, date, user and the billing filename stub
+if you wish to more finely tailor your transactions.
+
+Refer to seperate help for specified transaction
+
+MP-Billing can read the comma delimited camping text file in this format and it is expecting the headers as shown below.
+Debtors_A/C:,TitleGivenSurname,Res_No,Site,Arr_Date_Short,Dep_Date_Short,Nights,Deposit_Amt,Tariff
+A28012345,Mr L CITIZEN,48123,1184,17/12/2011,28/01/2012,42,$1,123.45,$11,543.00
+The comma in the thousands seperator can be left in and the program will handle it OK.
+
+You may also set the pre=amble text that is printed on the invoice , which may be useful for padding to improve the formatting of the invoice.</value>
+  </data>
+  <data name="RichTextBox3.Text" xml:space="preserve">
+    <value>Creating Transactions:
+For manual billing...
+Choose BILLING - NEW MANUAL BILLING SESSION  to start a new billing session.
+Select a Trader from the Traders List
+Select a Service from the Services List
+Adjust the Quantity or Unit Cost and the transaction total will calculate automatically
+Click the ACCEPT button and the first line of the resulting billing file will be shown
+The number and totals for each trader will also be shown for convenience
+Repeat the process to build the remaining transactions.
+When done click the FINISHED button to conclude the billing file and save it to your PC.
+The MP-Billing application may then be closed using FILE - EXIT then clicking on the Exit splash.
+
+Alternatively for Bulk Billing...
+Choose BILLING - CAMPING INVOICE FILE IMPORT
+You will be prompted to select the text file that you exported from RMS previously.
+The program will add the various billing codes, format the invoice, adjust for the deposit,
+calculate the incredibly complex GST which is based on the length of stay.
+The output billing text file will be saved in a format suitable for Proclaim.</value>
+  </data>
+  <data name="RichTextBox4.Text" xml:space="preserve">
+    <value>Finishing:
+
+After completing the building of all transactions for your session click the FINISH button.
+The billing data will be transfered to a pipe delimited text file with the correct heading.
+The text file will be placed in your My Documents folder on the PC.
+
+The text file can be opened in Notepad if necessary but there is no need to look at it further.
+The file should not be altered in any way since one tiny mistake will cause Proclaim to reject the file
+ or worse, could create incorrect invoices.
+
+The file can be e-mailed to the Revenue office who will upload it directly into Proclaim.</value>
+  </data>
+  <data name="RichTextBox5.Text" xml:space="preserve">
+    <value>Traders and Services Lists:
+
+These lists are used to select the Trader and Services to build MANUAL transactions.
+The Traders list contains 3 fields currently, name, account number and Specified Transaction Amount.
+
+The Services list contains 4 fields currently, name, default quantity, default amount &amp; posting account.
+
+These lists may be adjusted as required to suit the purposes of your billing.
+The system will guide you to save the information once you have made changes.
+You may export the list data into a text file if you wish.  
+This should always be done FIRST before uninstalling the application prior to intalling an upgrade.
+
+GST should normally be excluded and allow Proclaim to add it later when producing invoices.
+Note:
+The Bulk Camping invoice processing feature calculates its own very complex GST which appears as a line item
+ and so is posted to the GST account. In this case, the proclaim debtor type should not be set to add GST (again).</value>
+  </data>
+  <data name="RichTextBox6.Text" xml:space="preserve">
+    <value>MANAGING LISTS containing Trader and Services data:
+or UPDATING or MOVING this program to another computer. 
+
+NOTE: This program runs on a single computer and the trader/services lists are NOT saved or shared on a network.
+If you un-install this application then your lists will also be deleted. 
+
+Use the FILE - BULK LIST OPERATIONS menu option to export the Trader &amp; Services list data out to a text file.
+You can then import a correctly formated file back into the application to automatically populate your Trader &amp; Services lists.
+
+This process should ALWAYS be used when updating the application. First export what you have, remove MP-Billing from the PC.
+Then UN-INSTALL the MP-Billing application.
+Then Install the new upgrade version
+Then Import the bulk file and all your traders and services will be restored.
+
+A clever person could produce a file for direct import into MP-Billing if that was necessary.</value>
+  </data>
+  <data name="RichTextBox7.Text" xml:space="preserve">
+    <value>Specified Transaction: Applies to manual billing only.
+
+It is assumed that you will be billing a set of traders using the one set of services with a common set of default service items with unit costs and quanties.
+However you may wish to set a default amount on a per trader basis for example Rent.
+
+Assuming you set the specified transaction name to say Rent in the SETTINGS area, then the application will expect to get the default amount from the Traders's list rather
+than the Services list.  This means then that as you are building your transactions the specific rent for that trader will be used as the default instead of the amount specified
+in the Services List.  You can of course always change the amount in the transaction builder before you accept the transaction.
+
+Also in the settings area you can change the default suffix that is appended to the specified transaction description. ie Rent July
+The default setting is the month before the current month but you can change it prior to the start of a New Billing Session.</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAwMDAAICAgAAAAP8AAP8AAAD//wD/AAAA/wD/AP//
+        AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAd3cAAHd3cAAHcAAAAAAABERHcARER3cARHcAAAAAAERERHBERER3AE
+        R3AAAAAABEdwRARHcERwBEdwAAAAAARHcEQER3BEcARHcAAAAAAER3BEBEdwRHAER3d3cAAABEdwRARH
+        cERwBER3d3cAAARHcEQER3BEcAdERER3AAAER3BEBEdwRHAHREcEd3d3BEd3RARHd0Rwd0REdEd3dwBE
+        REQAREREB0REREREREQABERAAAREQEREREREREREAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////////////////////////////
+        ///////////////////////////////////h4PP/wMBh/4CAYf+EhGH/hIRh/4SEYB+EhGAPhIRgD4SE
+        YICAgEAAwMCAAOHhAAD////9/////////////////////////////////////w==
+</value>
+  </data>
+</root>
