@@ -71,6 +71,7 @@ Partial Class frmMain
         Me.btnEmailFile = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.picBox1 = New System.Windows.Forms.PictureBox()
+        Me.CampingInvoiceFileImportAdjustmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1.SuspendLayout()
         Me.mnuNew.SuspendLayout()
         Me.GroupBoxTransaction.SuspendLayout()
@@ -251,7 +252,7 @@ Partial Class frmMain
         '
         'BillingToolStripMenuItem
         '
-        Me.BillingToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewManualBillingSessionToolStripMenuItem, Me.CampingInvoiceFileImportToolStripMenuItem})
+        Me.BillingToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewManualBillingSessionToolStripMenuItem, Me.CampingInvoiceFileImportToolStripMenuItem, Me.CampingInvoiceFileImportAdjustmentToolStripMenuItem})
         Me.BillingToolStripMenuItem.ForeColor = System.Drawing.Color.Maroon
         Me.BillingToolStripMenuItem.Name = "BillingToolStripMenuItem"
         Me.BillingToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
@@ -261,15 +262,15 @@ Partial Class frmMain
         '
         Me.NewManualBillingSessionToolStripMenuItem.ForeColor = System.Drawing.Color.Maroon
         Me.NewManualBillingSessionToolStripMenuItem.Name = "NewManualBillingSessionToolStripMenuItem"
-        Me.NewManualBillingSessionToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.NewManualBillingSessionToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
         Me.NewManualBillingSessionToolStripMenuItem.Text = "New Manual Billing Session"
         '
         'CampingInvoiceFileImportToolStripMenuItem
         '
         Me.CampingInvoiceFileImportToolStripMenuItem.ForeColor = System.Drawing.Color.Maroon
         Me.CampingInvoiceFileImportToolStripMenuItem.Name = "CampingInvoiceFileImportToolStripMenuItem"
-        Me.CampingInvoiceFileImportToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.CampingInvoiceFileImportToolStripMenuItem.Text = "Camping Invoice File Import"
+        Me.CampingInvoiceFileImportToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.CampingInvoiceFileImportToolStripMenuItem.Text = "Camping Invoice File Import New"
         '
         'mnuAboutToolStripMenuItem
         '
@@ -531,6 +532,13 @@ Partial Class frmMain
         Me.picBox1.TabIndex = 16
         Me.picBox1.TabStop = False
         '
+        'CampingInvoiceFileImportAdjustmentToolStripMenuItem
+        '
+        Me.CampingInvoiceFileImportAdjustmentToolStripMenuItem.ForeColor = System.Drawing.Color.Maroon
+        Me.CampingInvoiceFileImportAdjustmentToolStripMenuItem.Name = "CampingInvoiceFileImportAdjustmentToolStripMenuItem"
+        Me.CampingInvoiceFileImportAdjustmentToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.CampingInvoiceFileImportAdjustmentToolStripMenuItem.Text = "Camping Invoice File Import Adjustment"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -613,5 +621,5 @@ Partial Class frmMain
     Friend WithEvents BillingToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NewManualBillingSessionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CampingInvoiceFileImportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-
+    Friend WithEvents CampingInvoiceFileImportAdjustmentToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -180,7 +180,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0154961410")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0199007410")>  _
         Public Property CampingDepositAccount() As String
             Get
                 Return CType(Me("CampingDepositAccount"),String)
@@ -211,6 +211,18 @@ Namespace My
             End Get
             Set
                 Me("CampingInvLeadText") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Withdrawal of Foreshore Camping Fees - Season 2019/20")>  _
+        Public Property CampingWithdrawLeadText() As String
+            Get
+                Return CType(Me("CampingWithdrawLeadText"),String)
+            End Get
+            Set
+                Me("CampingWithdrawLeadText") = value
             End Set
         End Property
     End Class

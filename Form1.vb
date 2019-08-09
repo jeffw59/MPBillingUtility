@@ -5,8 +5,9 @@
     Public strDebtorType As String = My.Settings.DebtorType
     Public dtTransDate As Date = Date.Today
     Public strRentMonth As String = "NotYetSet" 'last month is used to append on rent transactions
-    Public strUser As String = GetUserName
-    Public strDataFileNameStub As String = "BillingData"
+    Public strUser As String = GetUserName()
+    Public strDataFileNameStub As String = "CampingDebInvoice"
+    Public strDataFileNameWithdraw As String = "CampingDebAdjust"
     Public strSpecifiedTraderService As String = My.Settings.TraderSpecificService
     Public blnBillingSession As Boolean = False
     Public blnClosedOnce As Boolean = False  'used to show exit splash on close
@@ -15,6 +16,7 @@
     Public strCampingIncomeAcct As String = My.Settings.CampingIncomeAccount
     Public strCampingDepositAcct As String = My.Settings.CampingDepositAccount
     Public strCampingInvLeadText As String = My.Settings.CampingInvLeadText   'This is typically the season dates
+    Public strCampingWithdrawLeadText As String = My.Settings.CampingWithdrawLeadText
 
     Dim aryTraderName() As String
     Dim aryTraderAccount() As String
@@ -924,18 +926,18 @@
 
     Private Sub CampingInvoiceFileImportToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CampingInvoiceFileImportToolStripMenuItem.Click
         'Advise user how camping billing works and allow escape.
-        If MessageBox.Show("You are about to process raw billing data that you have previously extracted from the RMS camping management system" & vbCrLf & "You should have your .txt file already saved to a file location that you can access." & vbCrLf & "You will soon be asked to browse to the billing file." & vbCrLf & "Do You Wish To Continue?", "MP Billing at your service", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+        If MessageBox.Show("You are about to process raw billing data that you have previously extracted from the RMS camping management system" & vbCrLf & "You should have your .txt file already saved to a file location that you can access." & vbCrLf & "You will soon be asked to browse to the billing file." & vbCrLf & "Do You Wish To Continue?", "Foreshore Camping Debtors", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
             Exit Sub
         End If
         'Check that the user actually has the text file handy
-        If MessageBox.Show("Your settings indicate that you will print..." & vbCrLf & strCampingInvLeadText & vbCrLf & "Are you sure wish to proceed now to import the RMS Camping bookings data from your pre-prepared text file?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+        If MessageBox.Show("Your settings indicate that you will print..." & vbCrLf & strCampingInvLeadText & vbCrLf & "Are you sure wish to proceed now to import the RMS Camping bookings data from your pre-prepared text file?", "Foreshore Camping Debtors", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
             Exit Sub
         End If
         'Find out where the camping invoice file is and create a file dialog to browse to the file
         Dim fdlg As OpenFileDialog = New OpenFileDialog()
         fdlg.Title = "Camping File Import"
         fdlg.InitialDirectory = "c:\"
-        fdlg.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"
+        fdlg.Filter = "CSV files (*.csv)|*.csv|txt files (*.txt)|*.txt|All files (*.*)|*.*"
         fdlg.FilterIndex = 1  'use the first filter defined above as the default
         fdlg.RestoreDirectory = True
         If fdlg.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
@@ -1115,8 +1117,8 @@ zRestartAnalysisPoint:
                         'Exit Sub
                         'End If
                         If RawAmt = 0 Then  'All Tariffs ought to be more than zero
-                                MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " The Tariff has ended up zero at this point" & vbCrLf & "Your Billing Session will end", "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
-                                Exit Sub
+                            MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " The Tariff has ended up zero at this point" & vbCrLf & "Your Billing Session will end", "Foreshore Camping Debtors", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                            Exit Sub
                             End If
                             Dim RawDeposit As Decimal = 0
                         'If Strings.Left(aryReadLine(7), 1) = "$" Then  'get rid of the leading $ sign
@@ -1129,8 +1131,8 @@ zRestartAnalysisPoint:
                             If IsNumeric(aryReadLine(6)) Then  'convert to integer
                                 Nights = CInt(aryReadLine(6))
                             Else
-                                MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " Expecting an integer for the nights value" & vbCrLf & "Your Billing Session will end", "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
-                                Exit Sub
+                            MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " Expecting an integer for the nights value" & vbCrLf & "Your Billing Session will end", "Foreshore Camping Debtors", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                            Exit Sub
                             End If
                             Dim TariffComponent As Decimal
                             Dim GSTComponent As Decimal
@@ -1224,9 +1226,9 @@ ShortCCt:
         mydocName = mydocName & "_" & DateTime.Today.Day & DateTime.Today.Month & DateTime.Today.Year
         mydocName = mydocName & ".txt"
         Dim Path As String = mydocpath & mydocName
-        MsgOK = MsgBox("You are now ready to write the transactions to an output file suitable for uploading into Proclaim Sundry Debtors?" & vbCrLf & vbCrLf & _
-               "Click Yes to continue and create the file." & vbCrLf & vbCrLf & _
-               "Click No if you are sick of it and just want to go home.", vbYesNo, "MyT Billing Gadget")
+        MsgOK = MsgBox("Create File For Import to Property and Rating Sundry Debtors?" & vbCrLf & vbCrLf &
+               "Click Yes to continue and create the file." & vbCrLf & vbCrLf &
+               "Click No to Cancel.", vbYesNo, "Foreshore Camping Debtors")
         If MsgOK = vbYes Then
             If System.IO.File.Exists(Path) = False Then
                 ' Create a file to write the records into.
@@ -1238,9 +1240,9 @@ ShortCCt:
                 sw.Close()
                 FileOK = True
             ElseIf System.IO.File.Exists(Path) = True Then  'this would occur if the file existed and the user would be prompted to overwrite
-                MsgOK = MsgBox("File " & mydocName & " exists in " & mydocpath & "." & vbCrLf & _
-               "Click OK to overwite file." & vbCrLf & _
-               "Click Cancel for some other choice that hasn't been thought of yet!", vbOKCancel, "MyT Billing Gadget")
+                MsgOK = MsgBox("File " & mydocName & " exists in " & mydocpath & "." & vbCrLf &
+               "Click OK to overwite file." & vbCrLf &
+               "Click Cancel for some other choice that hasn't been thought of yet!", vbOKCancel, "Foreshore Camping Debtors")
                 If MsgOK = vbOK Then
                     ' Create a file to write records into.
                     Dim sw As System.IO.StreamWriter = System.IO.File.CreateText(Path)
@@ -1256,7 +1258,7 @@ ShortCCt:
             End If
         End If
         If FileOK = True Then
-            MessageBox.Show("Transaction File Now Complete" & vbCrLf & "File is located on your computer ... " & Path & vbCrLf & "A wise person would not assume that the computer is always correct and perform some random validations before sending invoices. Thankyou for your time today ", "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
+            MessageBox.Show("Transaction File Now Complete" & vbCrLf & "File is located on your computer ... " & Path & vbCrLf & "It would pay to manually validate the file has the correct format.", "Foreshore Camping Debtors", MessageBoxButtons.OK, MessageBoxIcon.Question)
         Else
             MessageBox.Show("File not written." & vbCrLf & "Something went wrong." & Path & vbCrLf & "Try again later perhaps.", "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
         End If
@@ -1294,6 +1296,349 @@ ShortCCt:
     End Function
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub CampingInvoiceFileImportAdjustmentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CampingInvoiceFileImportAdjustmentToolStripMenuItem.Click
+        'Advise user how camping billing works and allow escape.
+        If MessageBox.Show("You are about to process raw billing data that you have previously extracted from the RMS camping management system" & vbCrLf & "You should have your .txt file already saved to a file location that you can access." & vbCrLf & "You will soon be asked to browse to the billing file." & vbCrLf & "Do You Wish To Continue?", "Foreshore Camping Debtors Reversal", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+            Exit Sub
+        End If
+        'Check that the user actually has the text file handy
+        If MessageBox.Show("Your settings indicate that you will print..." & vbCrLf & strCampingInvLeadText & vbCrLf & "Are you sure wish to proceed with the creation of the RMS Camping reversal of bookings file from your pre-prepared text file?", "Foreshore Camping Debtors Reversal", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+            Exit Sub
+        End If
+        'Find out where the camping invoice file is and create a file dialog to browse to the file
+        Dim fdlg As OpenFileDialog = New OpenFileDialog()
+        fdlg.Title = "Camping Reversal File Import"
+        fdlg.InitialDirectory = "c:\"
+        fdlg.Filter = "CSV files (*.csv)|*.csv|txt files (*.txt)|*.txt|All files (*.*)|*.*"
+        fdlg.FilterIndex = 1  'use the first filter defined above as the default
+        fdlg.RestoreDirectory = True
+        If fdlg.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim x As String = fdlg.FileName
+            If System.IO.File.Exists(fdlg.FileName) = False Then
+                MsgBox("File does not exist")
+                Exit Sub
+            End If
+        Else
+            Exit Sub
+        End If
+        'Start a stream reader to read the file
+        Dim objReader As New System.IO.StreamReader(fdlg.FileName)
+        Dim i As Integer = 0   'i will be the line number read from the file
+        '???????start an array to hold the data as it is read from the file
+        'Dim aryCampingRaw() As String
+        'aryCampingRaw = New String() {"x"}   'need to put something in the array to start it off.
+        '?????????????????
+        Dim intElementsInArray As Integer 'Holds the number of elements in each readline
+        'start an array to hold the output data as it is built from the data we are reading
+        Dim aryCampingTransactionsOut() As String
+        aryCampingTransactionsOut = New String() {"x"}
+        'Prpare variable for the output billing file
+        Dim intCampingTransactionsOutCounter As Integer = 0  'This will be incremented prior to storing the first transaction leaving element 0 as x for the moment which will be used later to store the transaction file header
+        Dim decCampingTransactionsOutTotal = 0 'This will accumulate the total valu of the file to be used later in the header
+        Dim intBadAccNo As Integer = 0  'These are used to report on common problems with data
+        Dim intBadTariff As Integer = 0
+        Dim intMissAccNo As Integer = 0
+        Dim intGoodLine As Integer = 0 'Use to record the number of lines with valid data
+
+        Try
+            If (objReader IsNot Nothing) Then
+                'Code to read the stream here.
+                Do While objReader.Peek() <> -1
+                    Dim ReadLine As String = objReader.ReadLine()
+                    'MsgBox("ReadLine=" & ReadLine)
+                    If i = 0 Then 'check that the first line for correct headers to prove file is valid
+                        If Strings.Left(ReadLine, 12) <> "Debtors A/C:" Then 'this should be the first element of the first line
+                            MsgBox("There is an error with the file syntax in line " & i & vbCrLf & "Finding  " & ReadLine & "   instead of Debtors A/C:  " & vbCrLf & "You have probably selected the wrong file.")
+                            Exit Sub
+                        End If
+                        If ReadLine <> "Debtors A/C:,TitleGivenSurname,Reservation_No,Site,Arrive_Date_Short,Depart_Date_Short,Nights,Deposit_Amt,Tariff" Then
+                            MessageBox.Show("First line of file is not as expected." & vbCrLf & "Seeing... " & ReadLine & vbCrLf & " but expecting... Debtors_A/C:,TitleGivenSurname,Res_No,Site,Arr_Date_Short,Dep_Date_Short,Nights,Deposit_Amt,Tariff", "Foreshore Camping Debtors Reversal", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                            Exit Sub
+                        Else 'File is valid so we can prepare a few things
+                            'Each read line is a comma seperated string
+                            intElementsInArray = UBound(ReadLine.Split(","))  'should be = 8 (ie 9 elements)
+                            'Turn off Billing Menu Item options so they can't be selected again
+                            'disable the refresh buttons
+                            btnTradersRefresh.Visible = False
+                            btnServicesRefresh.Visible = False
+                            NewManualBillingSessionToolStripMenuItem.Enabled = False ' make sure its not selected again
+                            CampingInvoiceFileImportToolStripMenuItem.Enabled = False ' make sure its not selected again
+                            SettingsToolStripMenuItem.Enabled = False 'make sure the settings are not changed mid stream
+                            ToolStripMenuItem1.Enabled = False
+                            UpdateToolStripMenuItem.Enabled = False
+                        End If
+                    Else  'READ THE SECOND & SUBSEQUENT LINES WHICH WILL BE THE FIRST LINE OF DATA
+                        'Code here to examine the right hand end of the readline for unwanted commas used as thousands seperator
+                        'We are going to strip out any unnecessary comma's as thousands seperators in two potential places
+                        'STEP 1.
+                        Dim intDollarSpot As Integer = 0  'this will be the first position where a $ sign is found in the string reading from the right
+zRestartAnalysisPoint:
+                        '                        For z = 1 To Len(ReadLine)
+                        '                            Select Case z
+                        '                                Case 1 To 2 'should be both numeric ie 00 23 etc
+                        '                                    If IsNumeric(Mid(ReadLine, Len(ReadLine) + 1 - z, 1)) Then  ' the last two characters should be numeric
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " last two characters ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case 3
+                        '                                    If Mid(ReadLine, Len(ReadLine) + 1 - z, 1) = "." Then  'should be a decimal point
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " third last character ought to be a .  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case 4 ' this is potentially 9 dollars but should be alway numeric
+                        '                                    If IsNumeric(Mid(ReadLine, Len(ReadLine) + 1 - z, 1)) Then  ' the character should be numeric
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " character ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case 5 To 10 ' these are potentially numeric characters and we need to keep going until we find a dollar sign but could be ,$ or 99 or $9
+                        '                                    If IsNumeric(Mid(ReadLine, Len(ReadLine) + 1 - z, 1)) Then  ' the character should be numeric
+                        '                                    ElseIf Mid(ReadLine, Len(ReadLine) + 1 - z, 1) = "$" Then 'there was no thousands comma found
+                        '                                        intDollarSpot = z 'first dollar sign is found from right end of string
+                        '                                        Exit For
+                        '                                    ElseIf Mid(ReadLine, Len(ReadLine) + 1 - z, 1) = "," Then 'this comma has to be deleted
+                        '                                        ReadLine = Strings.Left(ReadLine, Len(ReadLine) - z) & Strings.Right(ReadLine, z - 1)
+                        '                                        GoTo zRestartAnalysisPoint
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " character ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case Else
+                        '                            End Select
+                        '                        Next z
+                        '                        'STEP2
+                        'yRestartAnalysisPoint:
+                        '                        For y = intDollarSpot To Len(ReadLine)
+                        '                            Select Case y
+                        '                                Case intDollarSpot 'should be a $
+                        '                                    If Mid(ReadLine, Len(ReadLine) + 1 - y, 1) = "$" Then  ' this is the dollar form the tarriff
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " last two characters ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case intDollarSpot + 1 'should be a ,
+                        '                                    If Mid(ReadLine, Len(ReadLine) + 1 - y, 1) = "," Then  ' this comma is a good one
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " last two characters ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case intDollarSpot + 2 To intDollarSpot + 3 'should be both numeric ie 00 23 etc
+                        '                                    If IsNumeric(Mid(ReadLine, Len(ReadLine) + 1 - y, 1)) Then  ' the last two characters should be numeric
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " last two characters ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case intDollarSpot + 4
+                        '                                    If Mid(ReadLine, Len(ReadLine) + 1 - y, 1) = "." Then  'should be a decimal point
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " ought to be a . in the deposit  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case intDollarSpot + 5 ' this is potentially 9 dollars but should be alway numeric
+                        '                                    If IsNumeric(Mid(ReadLine, Len(ReadLine) + 1 - y, 1)) Then  ' the character should be numeric
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " character ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case intDollarSpot + 6 To intDollarSpot + 11 ' these are potentially numeric characters and we need to keep going until we find a dollar sign but could be ,$ or 99 or $9
+                        '                                    If IsNumeric(Mid(ReadLine, Len(ReadLine) + 1 - y, 1)) Then  ' the character should be numeric
+                        '                                    ElseIf Mid(ReadLine, Len(ReadLine) + 1 - y, 1) = "$" Then 'there was no thousands comma found
+                        '                                        intDollarSpot = y 'second dollar sign is found from right end of string, stop checking now
+                        '                                        Exit For
+                        '                                    ElseIf Mid(ReadLine, Len(ReadLine) + 1 - y, 1) = "," Then 'this comma has to be deleted
+                        '                                        ReadLine = Strings.Left(ReadLine, Len(ReadLine) - y) & Strings.Right(ReadLine, y - 1)
+                        '                                        GoTo yRestartAnalysisPoint
+                        '                                    Else
+                        '                                        MsgBox("There is an error with the file syntax in line " & i & vbCrLf & " character ought to be numeric  " & ReadLine(i) & "" & vbCrLf & "You have probably selected the wrong file.")
+                        '                                        Exit Sub
+                        '                                    End If
+                        '                                Case Else
+                        '                            End Select
+                        '                        Next y
+                        '                        'We should now have a readline that should not have too many commas in it
+                        'Read the first line of the input file, split on commas and place into a temp array
+                        'Each line will look like... Debtors_A/C:,TitleGivenSurname,Res_No,Site,Arr_Date_Short,Dep_Date_Short,Nights,Deposit_Amt,Tariff
+                        Dim aryReadLine() = ReadLine.Split(",") 'each line is a comma seperated string
+                        If UBound(aryReadLine) <> intElementsInArray Then 'something is very wrong
+                            MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " An extra comma was found in the data and couldn't be removed." & vbCrLf & "Your Billing Session will end", "Foreshore Camping Debtors Reversal", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                        End If
+                        'From this data we need to pick out and cleanup some of the data
+                        If aryReadLine(0) = "" Then
+                            intMissAccNo = intMissAccNo + 1
+                            GoTo ShortCCt 'Lines with no account number need to be skipped
+                        ElseIf aryReadLine(0) = " " Then
+                            intMissAccNo = intMissAccNo + 1
+                            GoTo ShortCCt 'Lines with no account number need to be skipped
+                        ElseIf Strings.Left(aryReadLine(0), 3) <> "A28" Then
+                            intBadAccNo = intBadAccNo + 1
+                            GoTo ShortCCt 'Lines with no account number need to be skipped
+                        ElseIf Len(aryReadLine(0)) <> 9 Then
+                            intBadAccNo = intBadAccNo + 1
+                            GoTo ShortCCt 'Lines with no account number need to be skipped
+                            'ElseIf aryReadLine(8) = "0" Then
+                            '   intBadTariff = intBadTariff + 1
+                            '  GoTo ShortCCt 'Lines with no tariff need to be skipped
+                        End If
+                        Dim RawAmt As Decimal = 0
+                        'If Strings.Left(aryReadLine(8), 1) = "$" Then  'get rid of the leading $ sign
+                        RawAmt = Strings.Right(aryReadLine(8), Strings.Len(aryReadLine(8)))
+                        'Else
+                        'MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " Expecting a dollar sign in the Tariff" & vbCrLf & "Your Billing Session will end", "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                        'Exit Sub
+                        'End If
+                        If RawAmt = 0 Then  'All Tariffs ought to be more than zero
+                            MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " The Tariff has ended up zero at this point" & vbCrLf & "Your Billing Session will end", "Foreshore Camping Debtors Reversal", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                            Exit Sub
+                        End If
+                        Dim RawDeposit As Decimal = 0
+                        'If Strings.Left(aryReadLine(7), 1) = "$" Then  'get rid of the leading $ sign
+                        RawDeposit = Strings.Right(aryReadLine(7), Strings.Len(aryReadLine(7)))
+                        'Else
+                        'MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " Expecting a dollar sign in the Deposit" & vbCrLf & "Your Billing Session will end", "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                        'Exit Sub
+                        'End If
+                        Dim Nights As Integer = 0
+                        If IsNumeric(aryReadLine(6)) Then  'convert to integer
+                            Nights = CInt(aryReadLine(6))
+                        Else
+                            MessageBox.Show("There is a problem with data in line " & i & vbCrLf & " Expecting an integer for the nights value" & vbCrLf & "Your Billing Session will end", "Foreshore Camping Debtors Reversal", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                            Exit Sub
+                        End If
+                        Dim TariffComponent As Decimal
+                        Dim GSTComponent As Decimal
+                        GSTComponent = CampingGSTCalc(RawAmt, aryReadLine(6))   'uses the CampingGSTCalc user function to calculate the GST component
+                        TariffComponent = RawAmt - GSTComponent
+                        GSTComponent = GSTComponent * -1 'convert to negative
+                        TariffComponent = TariffComponent * -1 'convert to negative
+                        Dim TariffDesc As String
+                        TariffDesc = strCampingWithdrawLeadText & " Reservation_No: " & aryReadLine(2) & "  Site: " & aryReadLine(3) & ".  Arrival_date: " & aryReadLine(4) & ".  Departure_date: " & aryReadLine(5) & ".  Total_nights: " & aryReadLine(6)
+                        Dim DepositDesc As String
+                        Dim DepositComponent As Decimal
+                        If RawDeposit > 0 Then
+                            DepositDesc = "Reversal of Deposit/Payments already received: ($" & RawDeposit & ")"
+                            DepositComponent = RawDeposit  'convert to negative
+                        Else
+                            DepositDesc = "No pre-payments:"
+                            DepositComponent = 0
+                        End If
+                        Dim GSTDesc As String
+                        GSTDesc = "Withdrawal of GST payable on Tariff"
+                        intGoodLine = intGoodLine + 1
+                        'From this data we need to generate three transactions for the output file, one for the charge, one for the deposit and one for the GST
+                        Dim OutputLine1 As String = ""
+                        Dim OutputLine2 As String = ""
+                        Dim OutputLine3 As String = "" 'the GST component
+                        Dim TransType As String = "debadjust"
+                        Dim TransReference As String = ""
+                        TransReference = "Reservation# " & aryReadLine(2) 'Reservation No
+                        'Generate First Transaction of the triple  Amount
+                        OutputLine1 = aryReadLine(0) & "||||||||"
+                        OutputLine1 = OutputLine1 & strCampingDebtorType & "|" & dtTransDate & "|"
+                        OutputLine1 = OutputLine1 & TransReference & "|" & TransType & "|"
+                        OutputLine1 = OutputLine1 & TariffComponent & "|||" & TariffDesc & "|||"
+                        OutputLine1 = OutputLine1 & strCampingIncomeAcct '****** COMMENT OUT TO REMOVE GL ACCOUNT **************
+                        'Generate Second Transaction of the triple Deposit
+                        OutputLine2 = aryReadLine(0) & "||||||||"
+                        OutputLine2 = OutputLine2 & strCampingDebtorType & "|" & dtTransDate & "|"
+                        OutputLine2 = OutputLine2 & TransReference & "|" & TransType & "|"
+                        OutputLine2 = OutputLine2 & DepositComponent & "|||" & DepositDesc & "|||"
+                        OutputLine2 = OutputLine2 & strCampingDepositAcct
+                        'Generate THird Transaction of the pair  GST
+                        OutputLine3 = aryReadLine(0) & "||||||||"
+                        OutputLine3 = OutputLine3 & strCampingDebtorType & "|" & dtTransDate & "|"
+                        OutputLine3 = OutputLine3 & TransReference & "|" & TransType & "|"
+                        OutputLine3 = OutputLine3 & GSTComponent & "|||" & GSTDesc & "|||"
+                        OutputLine3 = OutputLine3 & strCampingGSTAcct
+                        'Keep building the output array that will be used to build the output file
+                        intCampingTransactionsOutCounter = intCampingTransactionsOutCounter + 1 'increment counter
+                        ReDim Preserve aryCampingTransactionsOut(intCampingTransactionsOutCounter)
+                        aryCampingTransactionsOut(intCampingTransactionsOutCounter) = OutputLine1
+                        listBoxTransList.Items.Add(aryCampingTransactionsOut(intCampingTransactionsOutCounter)) 'add a line to the listbox to show the user
+                        intCampingTransactionsOutCounter = intCampingTransactionsOutCounter + 1 'increment counter
+                        ReDim Preserve aryCampingTransactionsOut(intCampingTransactionsOutCounter)
+                        aryCampingTransactionsOut(intCampingTransactionsOutCounter) = OutputLine2
+                        listBoxTransList.Items.Add(aryCampingTransactionsOut(intCampingTransactionsOutCounter)) 'add a line to the listbox to show the user
+                        intCampingTransactionsOutCounter = intCampingTransactionsOutCounter + 1 'increment counter
+                        ReDim Preserve aryCampingTransactionsOut(intCampingTransactionsOutCounter)
+                        aryCampingTransactionsOut(intCampingTransactionsOutCounter) = OutputLine3
+                        listBoxTransList.Items.Add(aryCampingTransactionsOut(intCampingTransactionsOutCounter)) 'add a line to the listbox to show the user
+                        'Tally the total file value
+                        decCampingTransactionsOutTotal = decCampingTransactionsOutTotal + TariffComponent + DepositComponent + GSTComponent
+                        'MessageBox.Show("OutputLine1 = " & OutputLine1 & vbCrLf & "OutputLine2 = " & OutputLine2 & vbCrLf & "OutputLine3 = " & OutputLine3 & vbCrLf & "Tally = " & decCampingTransactionsOutTotal, "MP Billing at your service", MessageBoxButtons.OK, MessageBoxIcon.Question)
+ShortCCt:
+                    End If
+                    i = i + 1
+                Loop
+            End If
+        Catch Ex As Exception
+            MessageBox.Show("Cannot read file from disk. Original error: " & Ex.Message)
+        Finally
+            ' Check this again, since we need to make sure we didn't throw an exception on open.
+            If (objReader IsNot Nothing) Then
+                objReader.Close()
+            End If
+        End Try
+        'Add the header info to element 0 of the transaction array
+        aryCampingTransactionsOut(0) = strCampingDebtorType & "|" & decCampingTransactionsOutTotal
+        'Advise user of outcome and next steps they should take
+        MessageBox.Show("Transaction Listing Now Complete" & vbCrLf &
+            "There were " & i - 1 & " lines of data read from the file." & vbCrLf &
+            "There were " & intBadAccNo & " lines with bad account numbers" & vbCrLf &
+            "There were " & intMissAccNo & " lines with missing account numbers." & vbCrLf &
+            "There were " & intBadTariff & " lines with zero tariff's." & vbCrLf &
+            "There were " & intGoodLine & " lines with valid data." & vbCrLf &
+            "There are " & intCampingTransactionsOutCounter & " transactions with a total value of $" & decCampingTransactionsOutTotal & vbCrLf &
+            "~", "MP Foreshore Camping Billing", MessageBoxButtons.OK, MessageBoxIcon.Question)
+        'Let the transactions be written to a file.
+        Dim MsgOK As String
+        Dim FileOK As Boolean = False
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "\"
+        Dim mydocName As String
+        mydocName = strDataFileNameWithdraw & "_" & strUser
+        mydocName = mydocName & "_" & DateTime.Today.Day & DateTime.Today.Month & DateTime.Today.Year
+        mydocName = mydocName & ".txt"
+        Dim Path As String = mydocpath & mydocName
+        MsgOK = MsgBox("Ready to create the reversal file for import into Property and Rating Sundry Debtors?" & vbCrLf & vbCrLf &
+               "Click Yes to continue and create the file." & vbCrLf & vbCrLf &
+               "Click No to Cancel.", vbYesNo, "Foreshore Camping Debtors Reversal")
+        If MsgOK = vbYes Then
+            If System.IO.File.Exists(Path) = False Then
+                ' Create a file to write the records into.
+                Dim sw As System.IO.StreamWriter = System.IO.File.CreateText(Path)
+                For l As Integer = 0 To UBound(aryCampingTransactionsOut)
+                    sw.WriteLine(aryCampingTransactionsOut(l))
+                Next l
+                sw.Flush()
+                sw.Close()
+                FileOK = True
+            ElseIf System.IO.File.Exists(Path) = True Then  'this would occur if the file existed and the user would be prompted to overwrite
+                MsgOK = MsgBox("File " & mydocName & " exists in " & mydocpath & "." & vbCrLf &
+               "Click OK to overwite file." & vbCrLf &
+               "Click Cancel to abort the operation.", vbOKCancel, "Foreshore Camping Debtors Reversal")
+                If MsgOK = vbOK Then
+                    ' Create a file to write records into.
+                    Dim sw As System.IO.StreamWriter = System.IO.File.CreateText(Path)
+                    For l As Integer = 0 To UBound(aryCampingTransactionsOut)
+                        sw.WriteLine(aryCampingTransactionsOut(l))
+                    Next l
+                    sw.Flush()
+                    sw.Close()
+                    FileOK = True
+                Else
+                    FileOK = False
+                End If
+            End If
+        End If
+        If FileOK = True Then
+            MessageBox.Show("Transaction File Now Complete" & vbCrLf & "File is located on your computer ... " & Path & vbCrLf & "It would pay to manually validate the file has the correct format.", "Foreshore Camping Debtors Reversal", MessageBoxButtons.OK, MessageBoxIcon.Question)
+        Else
+            MessageBox.Show("File not written." & vbCrLf & "Something went wrong." & Path & vbCrLf & "Correct any Problems & Try Again.", "Foreshore Camping Debtors Reversal", MessageBoxButtons.OK, MessageBoxIcon.Question)
+        End If
 
     End Sub
 End Class

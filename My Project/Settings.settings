@@ -53,13 +53,16 @@
       <Value Profile="(Default)">0154961410</Value>
     </Setting>
     <Setting Name="CampingDepositAccount" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0154961410</Value>
+      <Value Profile="(Default)">0199007410</Value>
     </Setting>
     <Setting Name="CampingDebtorType" Type="System.String" Scope="User">
       <Value Profile="(Default)">128</Value>
     </Setting>
     <Setting Name="CampingInvLeadText" Type="System.String" Scope="User">
       <Value Profile="(Default)">Foreshore Camping Fees - Season 2019/20</Value>
+    </Setting>
+    <Setting Name="CampingWithdrawLeadText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Withdrawal of Foreshore Camping Fees - Season 2019/20</Value>
     </Setting>
   </Settings>
 </SettingsFile>

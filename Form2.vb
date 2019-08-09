@@ -11,7 +11,8 @@
         My.Settings.DebtorType = txtBoxDebtorType.Text
         My.Settings.CampingGSTAccount = txtBoxCampingGST.Text
         My.Settings.CampingDebtorType = txtBoxCampingDebtorType.Text
-        My.Settings.CampingDebtorType = txtBoxInvLeadText.Text
+        My.Settings.CampingInvLeadText = txtBoxInvLeadText.Text
+        My.Settings.CampingWithdrawLeadText = txtBoxWithdrawLeadText.Text
         My.Settings.CampingDepositAccount = txtBoxCampingDeposit.Text
         My.Settings.CampingIncomeAccount = txtBoxCampingIncome.Text
 
@@ -33,6 +34,7 @@
         txtBoxCampingGST.Text = My.Settings.CampingGSTAccount
         txtBoxCampingDebtorType.Text = My.Settings.CampingDebtorType
         txtBoxInvLeadText.Text = My.Settings.CampingInvLeadText
+        txtBoxWithdrawLeadText.Text = My.Settings.CampingWithdrawLeadText
         txtBoxCampingDeposit.Text = My.Settings.CampingDepositAccount
         txtBoxCampingIncome.Text = My.Settings.CampingIncomeAccount
     End Sub
